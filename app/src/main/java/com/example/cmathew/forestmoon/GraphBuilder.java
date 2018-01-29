@@ -7,34 +7,32 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GraphBuilder {
-    public boolean[][] parseCsv(InputStream csvStream) throws IOException {
-        boolean[][] connections = new boolean[5][5];
-
+    public Boolean[][] parseCsv(InputStream csvStream) throws IOException {
         CSVParser csvParser = CSVParser.parse(
                 csvStream,
                 Charset.forName("UTF-8"),
                 CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim()
         );
 
+        List<Boolean[]> graphConnectionList = new ArrayList<>();
         Iterable<CSVRecord> csvRecords = csvParser.getRecords();
         for (CSVRecord csvRecord : csvRecords) {
-            // Accessing values by Header names
-            int nodeId = Integer.parseInt(csvRecord.get("node_name")) - 1;
-            boolean connected1 = Integer.parseInt(csvRecord.get("connected_1")) == 1;
-            boolean connected2 = Integer.parseInt(csvRecord.get("connected_2")) == 1;
-            boolean connected3 = Integer.parseInt(csvRecord.get("connected_3")) == 1;
-            boolean connected4 = Integer.parseInt(csvRecord.get("connected_4")) == 1;
-            boolean connected5 = Integer.parseInt(csvRecord.get("connected_5")) == 1;
+            List<Boolean> nodeConnectionList = new ArrayList<>();
+            for (String record : csvRecord) {
+                boolean value = Integer.parseInt(record) == 1;
+                nodeConnectionList.add(value);
+            }
 
-            connections[nodeId][0] = connected1;
-            connections[nodeId][1] = connected2;
-            connections[nodeId][2] = connected3;
-            connections[nodeId][3] = connected4;
-            connections[nodeId][4] = connected5;
+            Boolean[] nodeConnectionArray = new Boolean[nodeConnectionList.size()];
+            nodeConnectionArray = nodeConnectionList.toArray(nodeConnectionArray);
+            graphConnectionList.add(nodeConnectionArray);
         }
 
-        return connections;
+        Boolean[][] graphArray = new Boolean[graphConnectionList.size()][graphConnectionList.size()];
+        return graphConnectionList.toArray(graphArray);
     }
 }

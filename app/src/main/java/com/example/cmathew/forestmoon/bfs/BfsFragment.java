@@ -1,4 +1,4 @@
-package com.example.cmathew.forestmoon;
+package com.example.cmathew.forestmoon.bfs;
 
 
 import android.os.Bundle;
@@ -8,14 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.cmathew.forestmoon.GraphBuilder;
+import com.example.cmathew.forestmoon.R;
+
 import java.io.IOException;
 import java.io.InputStream;
 
 public class BfsFragment extends Fragment {
     private static final String LOG_TAG = "Sailor";
 
-    private boolean[][] connections;
-    private boolean[] nodeVisited;
+    private Boolean[][] connections;
 
     private TextView sailorOutcome;
 
@@ -38,7 +40,7 @@ public class BfsFragment extends Fragment {
         try {
             try {
                 GraphBuilder graphBuilder = new GraphBuilder();
-                csvStream = getResources().openRawResource(R.raw.undirected_graph);
+                csvStream = getResources().openRawResource(R.raw.undirected_graph_1);
                 this.connections = graphBuilder.parseCsv(csvStream);
             } finally {
                 if (csvStream != null) {
@@ -49,25 +51,12 @@ public class BfsFragment extends Fragment {
             ex.printStackTrace();
         }
 
-        this.nodeVisited = new boolean[5];
-        for (int i = 0; i < nodeVisited.length; i++) {
-            nodeVisited[i] = false;
-        }
-
         BreadthFirstSearcher searcher = new BreadthFirstSearcher();
-        searcher.bfs(connections, 0, nodeVisited);
-
-        boolean allVisited = true;
-        for (int i = 0; i < nodeVisited.length; i++) {
-            allVisited = allVisited && nodeVisited[i];
-        }
-
-        if (!allVisited) {
+        if (!searcher.search(connections)) {
             sailorOutcome.setText("Islands detected.");
         } else {
             sailorOutcome.setText("Connected. You may travel freely!");
         }
-
     }
 
     @Override
@@ -77,5 +66,4 @@ public class BfsFragment extends Fragment {
         this.sailorOutcome = view.findViewById(R.id.sailor_scan_outcome);
         return view;
     }
-
 }
