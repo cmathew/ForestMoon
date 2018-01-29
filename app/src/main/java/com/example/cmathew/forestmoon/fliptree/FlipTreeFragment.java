@@ -43,7 +43,11 @@ public class FlipTreeFragment extends Fragment {
         flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                christmas.printLevels();
+
                 christmas.flip();
+
+                christmas.printLevels();
             }
         });
         return view;
