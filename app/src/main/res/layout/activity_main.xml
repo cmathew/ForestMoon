@@ -6,9 +6,5 @@
     android:layout_height="match_parent"
     tools:context="com.example.cmathew.forestmoon.MainActivity">
 
-    <TextView
-        android:id="@+id/sailor_scan_outcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>
