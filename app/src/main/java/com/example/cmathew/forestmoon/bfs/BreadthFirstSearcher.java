@@ -17,7 +17,7 @@ public class BreadthFirstSearcher {
      * @param  nodeConnections  Node ID x Node ID matrix
      * @return Mapping of node visitations, indexed by node ID
      */
-    public boolean search(Boolean[][] nodeConnections) {
+    public boolean search(boolean[][] nodeConnections) {
         this.isNodeVisited = new boolean[nodeConnections.length];
         for (int i = 0; i < isNodeVisited.length; i++) {
             isNodeVisited[i] = false;
@@ -31,7 +31,7 @@ public class BreadthFirstSearcher {
      * @param  currentNodeIndex Current node ID in the traversal
      * @return Mapping of node visitations, indexed by node ID
      */
-    private boolean bfs(Boolean[][] nodeConnections, int currentNodeIndex) {
+    private boolean bfs(boolean[][] nodeConnections, int currentNodeIndex) {
         // Cycle detected
         if (isNodeVisited[currentNodeIndex]) {
             return false;
@@ -49,7 +49,7 @@ public class BreadthFirstSearcher {
             return true;
         }
 
-        Boolean[] currentNodeConnections = nodeConnections[currentNodeIndex];
+        boolean[] currentNodeConnections = nodeConnections[currentNodeIndex];
         for (int i = 0; i < currentNodeConnections.length; i++) {
             if (currentNodeConnections[i]) {
                 if (bfs(nodeConnections, i)) {

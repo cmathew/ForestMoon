@@ -22,7 +22,7 @@ public class BreadthFirstSearcherTest {
 
         GraphBuilder graphBuilder = new GraphBuilder();
         InputStream csvStream = appContext.getResources().openRawResource(R.raw.undirected_graph_1);
-        Boolean[][] connections = graphBuilder.parseCsv(csvStream);
+        boolean[][] connections = graphBuilder.parseCsv(csvStream);
         BreadthFirstSearcher searcher = new BreadthFirstSearcher();
         boolean isConnected = searcher.search(connections);
         csvStream.close();

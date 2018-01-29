@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GraphBuilder {
-    public Boolean[][] parseCsv(InputStream csvStream) throws IOException {
+    public boolean[][] parseCsv(InputStream csvStream) throws IOException {
         CSVParser csvParser = CSVParser.parse(
                 csvStream,
                 Charset.forName("UTF-8"),
                 CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim()
         );
 
-        List<Boolean[]> graphConnectionList = new ArrayList<>();
+        List<List<Boolean>> graphConnectionList = new ArrayList<>();
         Iterable<CSVRecord> csvRecords = csvParser.getRecords();
         for (CSVRecord csvRecord : csvRecords) {
             List<Boolean> nodeConnectionList = new ArrayList<>();
@@ -27,12 +27,17 @@ public class GraphBuilder {
                 nodeConnectionList.add(value);
             }
 
-            Boolean[] nodeConnectionArray = new Boolean[nodeConnectionList.size()];
-            nodeConnectionArray = nodeConnectionList.toArray(nodeConnectionArray);
-            graphConnectionList.add(nodeConnectionArray);
+            graphConnectionList.add(nodeConnectionList);
         }
 
-        Boolean[][] graphArray = new Boolean[graphConnectionList.size()][graphConnectionList.size()];
-        return graphConnectionList.toArray(graphArray);
+        boolean[][] graphArray = new boolean[graphConnectionList.size()][graphConnectionList.size()];
+        for (int i = 0; i < graphConnectionList.size(); i++) {
+            List<Boolean> nodeConnectionList = graphConnectionList.get(i);
+            for (int j = 0; j < nodeConnectionList.size(); j++) {
+                graphArray[i][j] = nodeConnectionList.get(j);
+            }
+        }
+
+        return graphArray;
     }
 }
