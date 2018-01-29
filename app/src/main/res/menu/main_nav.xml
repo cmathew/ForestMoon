@@ -4,5 +4,8 @@
         <item android:id="@+id/dfs_navigation"
             android:checked="true"
             android:title="@string/navigation_title_depth_first_search" />
+        <item android:id="@+id/tree_navigation"
+            android:checked="false"
+            android:title="@string/navigation_title_flip_binary_tree" />
     </group>
 </menu>

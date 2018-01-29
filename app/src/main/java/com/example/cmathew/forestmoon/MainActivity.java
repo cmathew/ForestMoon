@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.cmathew.forestmoon.bfs.BfsFragment;
+import com.example.cmathew.forestmoon.fliptree.FlipTreeFragment;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,9 +42,7 @@ public class MainActivity extends AppCompatActivity
             setupDrawerNavigation();
         }
 
-        BfsFragment breadthFragment = BfsFragment.newInstance();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_container, breadthFragment).commit();
+        navigateToIslandFinder();
     }
 
     @Override
@@ -53,8 +52,35 @@ public class MainActivity extends AppCompatActivity
         drawerToggle.syncState();
     }
 
+    private void navigateToTreeFlipper() {
+        FlipTreeFragment treeFragment = FlipTreeFragment.newInstance();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_container, treeFragment).commit();
+    }
+
+    private void navigateToIslandFinder() {
+        BfsFragment breadthFragment = BfsFragment.newInstance();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_container, breadthFragment).commit();
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if (item.isChecked()) {
+            return true;
+        }
+
+        item.setChecked(true);
+        drawerLayout.closeDrawers();
+
+        if (item.getItemId() == R.id.tree_navigation) {
+            navigateToTreeFlipper();
+            return true;
+        } else if (item.getItemId() == R.id.dfs_navigation) {
+            navigateToIslandFinder();
+            return true;
+        }
+
         return false;
     }
 
