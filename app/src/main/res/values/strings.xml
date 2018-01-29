@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ForestMoon</string>
+
+    <!-- Navigation -->
+    <string name="navigation_title_depth_first_search">Island Finder</string>
+    <string name="nav_open_content_desc">Open</string>
+    <string name="nav_close_content_desc">Close</string>
 </resources>

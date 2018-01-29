@@ -23,7 +23,7 @@ public class BfsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static BfsFragment newInstance(String param1, String param2) {
+    public static BfsFragment newInstance() {
         BfsFragment fragment = new BfsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
