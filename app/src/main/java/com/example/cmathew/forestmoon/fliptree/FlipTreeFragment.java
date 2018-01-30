@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.cmathew.forestmoon.BinaryTree;
 import com.example.cmathew.forestmoon.R;
 
 public class FlipTreeFragment extends Fragment {
     private Button flipButton;
+    private Button inorderRecursiveButton;
+    private Button inorderIterativeButton;
     private BinaryTree christmas;
 
     public FlipTreeFragment() {
@@ -43,13 +46,26 @@ public class FlipTreeFragment extends Fragment {
         flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                christmas.printLevels();
-
                 christmas.flip();
-
-                christmas.printLevels();
             }
         });
+
+        this.inorderRecursiveButton = view.findViewById(R.id.inorder_recursive_tree_button);
+        inorderRecursiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                christmas.printInorderDfsRecursive();
+            }
+        });
+
+        this.inorderIterativeButton = view.findViewById(R.id.inorder_iterative_tree_button);
+        inorderIterativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                christmas.printInorderDfsIterative();
+            }
+        });
+        
         return view;
     }
 

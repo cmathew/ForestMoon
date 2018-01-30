@@ -1,10 +1,11 @@
-package com.example.cmathew.forestmoon.fliptree;
+package com.example.cmathew.forestmoon;
 
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class BinaryTree {
     private static final String LOG_TAG = "Christmas";
@@ -24,41 +25,42 @@ public class BinaryTree {
         this.rootNode = addNode(rootNode, value);
     }
 
-    // Return the modified tree
-    private TreeNode addNode(TreeNode currentNode, int value) {
-        if (currentNode == null) {
-            currentNode = new TreeNode(value);
-            return currentNode;
+    private TreeNode addNode(TreeNode currentRoot, int value) {
+        if (currentRoot == null) {
+            return new TreeNode(value);
         }
 
-        if (value <= currentNode.getValue()) {
-            TreeNode leftChild = currentNode.getLeftChild();
-            currentNode.setLeftChild(addNode(leftChild, value));
-        } else if (value > currentNode.getValue()) {
-            TreeNode rightChild = currentNode.getRightChild();
-            currentNode.setRightChild(addNode(rightChild, value));
+        if (value > currentRoot.getValue()) {
+            TreeNode rightChild = currentRoot.getRightChild();
+            TreeNode alteredRightRoot = addNode(rightChild, value);
+            currentRoot.setRightChild(alteredRightRoot);
+        } else {
+            TreeNode leftChild = currentRoot.getLeftChild();
+            TreeNode alteredLeftRoot = addNode(leftChild, value);
+            currentRoot.setLeftChild(alteredLeftRoot);
         }
 
-        return currentNode;
+        return currentRoot;
     }
 
     public void flip() {
-        flipTree(rootNode);
+        this.rootNode = flipTree(rootNode);
     }
 
-    private void flipTree(TreeNode currentNode) {
-        if (currentNode == null) {
-            return;
+    private TreeNode flipTree(TreeNode currentRoot) {
+        if (currentRoot == null) {
+            return null;
         }
 
-        TreeNode leftChild = currentNode.getLeftChild();
-        TreeNode rightChild = currentNode.getRightChild();
+        TreeNode leftChild = currentRoot.getLeftChild();
+        TreeNode rightChild = currentRoot.getRightChild();
 
-        currentNode.setLeftChild(rightChild);
-        currentNode.setRightChild(leftChild);
+        TreeNode alteredLeftRoot = flipTree(leftChild);
+        TreeNode alteredRightRoot = flipTree(rightChild);
+        currentRoot.setLeftChild(alteredRightRoot);
+        currentRoot.setRightChild(alteredLeftRoot);
 
-        flipTree(leftChild);
-        flipTree(rightChild);
+        return currentRoot;
     }
 
     public int getMaxDepth() {
@@ -142,6 +144,10 @@ public class BinaryTree {
         Log.v(LOG_TAG, String.valueOf(node.getValue()));
     }
 
+    public void printInorderDfsRecursive() {
+        printInorderDfs(rootNode);
+    }
+
     public void printInorderDfs(TreeNode node) {
         if (node == null) {
             return;
@@ -150,5 +156,29 @@ public class BinaryTree {
         printInorderDfs(node.getLeftChild());
         Log.v(LOG_TAG, String.valueOf(node.getValue()));
         printInorderDfs(node.getRightChild());
+    }
+
+    // for a given root we want to enqueue ourselves
+    // and enqueue all left children atop us
+    private void createInorderStackForNode(TreeNode node, Stack<TreeNode> stack) {
+        TreeNode currentLeftRoot = node;
+        while (currentLeftRoot != null) {
+            stack.push(currentLeftRoot);
+            currentLeftRoot = currentLeftRoot.getLeftChild();
+        }
+    }
+
+    public void printInorderDfsIterative() {
+        Stack<TreeNode> stack = new Stack<>();
+        createInorderStackForNode(rootNode, stack);
+
+        while (!stack.isEmpty()) {
+            // Pop a node, create a call stack from it
+            TreeNode current = stack.pop();
+            Log.d(LOG_TAG, String.valueOf(current.getValue()));
+
+            TreeNode currentRightRoot = current.getRightChild();
+            createInorderStackForNode(currentRightRoot, stack);
+        }
     }
 }
