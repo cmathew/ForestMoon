@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 
 import com.example.cmathew.forestmoon.bfs.BfsFragment;
 import com.example.cmathew.forestmoon.fliptree.FlipTreeFragment;
+import com.example.cmathew.forestmoon.inorder.KthElementFragment;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -64,6 +65,12 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.beginTransaction().replace(R.id.content_container, breadthFragment).commit();
     }
 
+    private void navigateToKthFinder() {
+        KthElementFragment kthElementFragment = KthElementFragment.newInstance();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_container, kthElementFragment).commit();
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.isChecked()) {
@@ -78,6 +85,9 @@ public class MainActivity extends AppCompatActivity
             return true;
         } else if (item.getItemId() == R.id.dfs_navigation) {
             navigateToIslandFinder();
+            return true;
+        } else if (item.getItemId() == R.id.kth_finder) {
+            navigateToKthFinder();
             return true;
         }
 

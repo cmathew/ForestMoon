@@ -181,4 +181,45 @@ public class BinaryTree {
             createInorderStackForNode(currentRightRoot, stack);
         }
     }
+
+    public TreeNode findKth(int k) {
+        return findKthInorder(rootNode, k);
+    }
+
+    private TreeNode findKthInorder(TreeNode root, int k) {
+        if (root == null) {
+            return null;
+        }
+
+        TreeNode leftResult = findKthInorder(root.getLeftChild(), k);
+        if (leftResult != null) {
+            return leftResult;
+        }
+        int leftDepth = getInorderDepth(root.getLeftChild());
+        k -= leftDepth;
+
+        if (k == 1) {
+            return root;
+        }
+
+        k--;
+        TreeNode rightResult = findKthInorder(root.getRightChild(), k);
+        if (rightResult != null) {
+            return rightResult;
+        }
+
+        return null;
+    }
+
+    // Combine inorder depth of each child, add 1
+    private int getInorderDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int leftDepth = getInorderDepth(root.getLeftChild());
+        int rightDepth = getInorderDepth(root.getRightChild());
+
+        return leftDepth + rightDepth + 1;
+    }
 }

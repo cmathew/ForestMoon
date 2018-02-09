@@ -4,10 +4,15 @@
     <!-- Navigation -->
     <string name="navigation_title_depth_first_search">Island Finder</string>
     <string name="navigation_title_flip_binary_tree">Tree Flipper</string>
+    <string name="navigation_title_kth_inorder_traversal">Kth Inorder</string>
+
     <string name="nav_open_content_desc">Open</string>
     <string name="nav_close_content_desc">Close</string>
 
     <!-- Breadth-first search -->
     <string name="bfs_result_graph_islands">Islands detected. No route to the buried treasure.</string>
     <string name="bfs_result_connected_graph">Connected. You may travel freely!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
